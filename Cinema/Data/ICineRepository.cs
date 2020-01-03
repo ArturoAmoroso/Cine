@@ -8,7 +8,7 @@ namespace Cinema.Data
 {
     public interface ICineRepository
     {
-        IEnumerable<Actor> GetActors();
+        IEnumerable<Actor> GetActors(bool showMovies=false);
         Actor GetActor(int id, bool showMovies = false);
         Actor CreateActor(Actor actor);
         bool DeleteActor(Actor actor);

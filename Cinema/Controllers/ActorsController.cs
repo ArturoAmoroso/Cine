@@ -19,11 +19,11 @@ namespace Cinema.Services
             this.actorsServices = actorsServices;
         }
         [HttpGet]
-        public ActionResult<IEnumerable<Actor>> GetActors(string orderBy = "Id"/*, bool showMovies = false*/)
+        public ActionResult<IEnumerable<Actor>> GetActors(string orderBy = "Id", bool showMovies = false)
         {
             try
             {
-                return Ok(actorsServices.GetActors(orderBy));
+                return Ok(actorsServices.GetActors(orderBy,showMovies));
             }
             catch (BadRequestEx ex)
             {

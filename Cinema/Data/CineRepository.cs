@@ -81,8 +81,15 @@ namespace Cinema.Data
             return actor;
         }
 
-        public IEnumerable<Actor> GetActors()
+        public IEnumerable<Actor> GetActors(bool showMovies)
         {
+            foreach (var actor in actors)
+            {
+                if (showMovies == true)
+                    actor.Movies = movies.Where(m => m.ActorId == actor.Id);
+                else
+                    actor.Movies = null;
+            }
             return actors;
         }
 

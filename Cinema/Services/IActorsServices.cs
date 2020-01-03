@@ -8,7 +8,7 @@ namespace Cinema.Services
 {
     public interface IActorsServices
     {
-        IEnumerable<Actor> GetActors(string orderBy);
+        IEnumerable<Actor> GetActors(string orderBy, bool showMovies);
         Actor GetActor(int Id, bool showMovies/* = false*/);
         Actor CreateActor(Actor actor);
         bool DeleteActor(int Id);

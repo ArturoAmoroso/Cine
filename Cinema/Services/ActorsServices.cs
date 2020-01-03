@@ -35,7 +35,7 @@ namespace Cinema.Services
             return actorFound;
         }
 
-        public IEnumerable<Actor> GetActors(string orderBy)
+        public IEnumerable<Actor> GetActors(string orderBy, bool showMovies)
         {
             if (orderBy == null)
                 throw new BadRequestEx("OrderBy needs a value");
@@ -45,7 +45,7 @@ namespace Cinema.Services
             {
                 throw new BadRequestEx($"Actors cannot orderBy:{orderBy} , only by: {string.Join(" , ", allowebOrderBy) }");
             }
-            var actors = cineRepository.GetActors();
+            var actors = cineRepository.GetActors(showMovies);
             switch (ordeByLower)
             {
                 case "name":
