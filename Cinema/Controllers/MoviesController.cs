@@ -19,11 +19,11 @@ namespace Cinema.Controllers
             this.moviesServices = moviesServices;
         }
         [HttpGet]
-        public ActionResult<IEnumerable<Movie>> GetMovies(int idActor)
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies(int idActor)
         {
             try
             {
-                return Ok(moviesServices.GetMovies(idActor));
+                return Ok(await moviesServices.GetMoviesAsync(idActor));
             }
             catch (NotFoundEx ex)
             {
@@ -31,11 +31,11 @@ namespace Cinema.Controllers
             }
         }
         [HttpGet("{idMovie}")]
-        public ActionResult<Movie> GetMovie(int idActor, int idMovie)
+        public async Task<ActionResult<Movie>> GetMovieAsync(int idActor, int idMovie)
         {
             try
             {
-                return Ok(moviesServices.GetMovie(idActor, idMovie));
+                return Ok(await moviesServices.GetMovieAsync(idActor, idMovie));
             }
             catch (NotFoundEx ex)
             {
@@ -47,7 +47,7 @@ namespace Cinema.Controllers
             }
         }
         [HttpPost]
-        public ActionResult<Movie> CreateMovie(int idActor, [FromBody] Movie movie)
+        public async Task<ActionResult<Movie>> CreateMovieAsync(int idActor, [FromBody] Movie movie)
         {
             if (!ModelState.IsValid)
             {
@@ -55,7 +55,7 @@ namespace Cinema.Controllers
             }
             try
             {
-                return Ok(moviesServices.CreateMovie(idActor, movie));
+                return Ok(await moviesServices.CreateMovieAsync(idActor, movie));
                 //return Created($"api/actors/{idActor}/movies/{movie.Id}",moviesServices.CreateMovie(idActor, movie));
             }
             catch (NotFoundEx ex)
@@ -68,11 +68,12 @@ namespace Cinema.Controllers
             }
         }
         [HttpDelete("{idMovie}")]
-        public ActionResult<string> DeleteActor(int idActor, int idMovie)
+        public async Task<ActionResult<string>> DeleteActorAsync(int idActor, int idMovie)
         {
             try
             {
-                if (moviesServices.DeleteMovie(idActor, idMovie))
+                var res = await moviesServices.DeleteMovieAsync(idActor, idMovie);
+                if (res)
                 {
                     return Ok($"Movie: {idMovie} removed");
                 }
@@ -89,7 +90,7 @@ namespace Cinema.Controllers
             }
         }
         [HttpPut("{idMovie}")]
-        public ActionResult<Movie> UpdateMovie(int idActor, int idMovie, [FromBody] Movie movie)
+        public async Task<ActionResult<Movie>> UpdateMovieAsync(int idActor, int idMovie, [FromBody] Movie movie)
         {
             if (!ModelState.IsValid)
             {
@@ -97,7 +98,7 @@ namespace Cinema.Controllers
             }
             try
             {
-                return Ok(moviesServices.UpdateMovie(idActor, idMovie, movie));
+                return Ok(await moviesServices.UpdateMovieAsync(idActor, idMovie, movie));
             }
             catch (NotFoundEx ex)
             {

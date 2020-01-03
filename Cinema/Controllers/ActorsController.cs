@@ -19,11 +19,11 @@ namespace Cinema.Services
             this.actorsServices = actorsServices;
         }
         [HttpGet]
-        public ActionResult<IEnumerable<Actor>> GetActors(string orderBy = "Id", bool showMovies = false)
+        public async Task<ActionResult<IEnumerable<Actor>>> GetActorsAsync(string orderBy = "Id", bool showMovies = false)
         {
             try
             {
-                return Ok(actorsServices.GetActors(orderBy,showMovies));
+                return Ok(await actorsServices.GetActorsAsync(orderBy,showMovies));
             }
             catch (BadRequestEx ex)
             {
@@ -31,11 +31,11 @@ namespace Cinema.Services
             }
         }
         [HttpGet("{id}")]
-        public ActionResult<Actor> GetActor(int id, bool showMovies = false)
+        public async Task<ActionResult<Actor>> GetActorAsync(int id, bool showMovies = false)
         {
             try
             {
-                return Ok(actorsServices.GetActor(id, showMovies));
+                return Ok(await actorsServices.GetActorAsync(id, showMovies));
             }
             catch (NotFoundEx ex)
             {
@@ -43,7 +43,7 @@ namespace Cinema.Services
             }
         }
         [HttpPost]
-        public ActionResult<Actor> CreateActor([FromBody] Actor actor)
+        public async Task<ActionResult<Actor>> CreateActorAsync([FromBody] Actor actor)
         {
             if (!ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace Cinema.Services
             }
             try
             {
-                return Ok(actorsServices.CreateActor(actor));
+                return Ok(await actorsServices.CreateActorAsync(actor));
             }
             catch (BadRequestEx ex)
             {
@@ -59,24 +59,36 @@ namespace Cinema.Services
             }
         }
         [HttpDelete("{id}")]
-        public ActionResult<string> DeleteActor(int id)
+        public async Task<ActionResult<string>> DeleteActorAsync(int id)
         {
+            //try
+            //{
+            //    if (actorsServices.DeleteActorAsync(id))
+            //    {
+            //        return Ok($"Actor: {id} removed");
+            //    }
+            //    else
+            //        return StatusCode(StatusCodes.Status500InternalServerError, $"Actor: {id} couldn't remove");
+            //}
+            //catch (NotFoundEx ex)
+            //{
+            //    return NotFound(ex.Message);
+            //}
             try
             {
-                if (actorsServices.DeleteActor(id))
-                {
-                    return Ok($"Actor: {id} removed");
-                }
-                else
-                    return StatusCode(StatusCodes.Status500InternalServerError, $"Actor: {id} couldn't remove");
+                return Ok(await this.actorsServices.DeleteActorAsync(id));
             }
             catch (NotFoundEx ex)
             {
                 return NotFound(ex.Message);
             }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
         [HttpPut("{id}")]
-        public ActionResult<Actor> UpdateActor(int id, [FromBody] Actor actor)
+        public async Task<ActionResult<Actor>> UpdateActorAsync(int id, [FromBody] Actor actor)
         {
             if (!ModelState.IsValid)
             {
@@ -89,7 +101,7 @@ namespace Cinema.Services
             }
             try
             {
-                return Ok(actorsServices.UpdateActor(id, actor));
+                return Ok(await actorsServices.UpdateActorAsync(id, actor));
             }
             catch (NotFoundEx ex)
             {
