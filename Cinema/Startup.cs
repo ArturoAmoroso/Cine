@@ -43,6 +43,12 @@ namespace Cinema
 
             //automapper configuration
             services.AddAutoMapper(typeof(Startup));
+
+            //CORS
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => { options.AllowAnyOrigin(); options.AllowAnyMethod(); options.AllowAnyHeader(); });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,12 +57,19 @@ namespace Cinema
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //CORS
+                app.UseCors(options => { options.AllowAnyOrigin(); options.AllowAnyMethod(); options.AllowAnyHeader(); });
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //app.UseCors(options => 
+            //{ 
+            //    options.AllowAnyOrigin(); options.AllowAnyMethod(); options.AllowAnyHeader();
+            //});
 
             app.UseHttpsRedirection();
             app.UseMvc();
