@@ -8,10 +8,10 @@ namespace Cinema.Services
 {
     public interface IMoviesServices
     {
-        IEnumerable<Movie> GetMovies(int idActor);
-        Movie GetMovie(int idActor, int idMovie);
-        Movie CreateMovie(int idActor, Movie movie);
-        bool DeleteMovie(int idActor, int idMovie);
-        Movie UpdateMovie(int idActor, int idMovie, Movie movie);
+        Task<IEnumerable<Movie>> GetMoviesAsync(int idActor);
+        Task<Movie> GetMovieAsync(int idActor, int idMovie);
+        Task<Movie> CreateMovieAsync(int idActor, Movie movie);
+        Task<bool> DeleteMovieAsync(int idActor, int idMovie);
+        Task<Movie> UpdateMovieAsync(int idActor, int idMovie, Movie movie);
     }
 }
