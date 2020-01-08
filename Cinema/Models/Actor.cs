@@ -16,5 +16,6 @@ namespace Cinema.Models
         [Range(1,120, ErrorMessage ="{0} must be between {1} and {2}")]
         public int Age { get; set; }
         public IEnumerable<Movie> Movies { get; set; }
+        public string imgURL { get; set; }
     }
 }

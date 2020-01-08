@@ -138,7 +138,7 @@ namespace Cinema.Data
             return await query.ToArrayAsync();
         }
 
-        public Task<MovieEntity> GetMovieAsync(int idMovie, bool showActor)
+        public async Task<MovieEntity> GetMovieAsync(int idMovie, bool showActor)
         {
             //var movieFound = movies.SingleOrDefault(m => m.Id == idMovie);
             //return movieFound;
@@ -149,35 +149,17 @@ namespace Cinema.Data
                 query = query.Include(b => b.Actor);
             }
             query = query.AsNoTracking();
-            return query.SingleAsync(b => b.Id == idMovie);
+            var movieE = await query.SingleAsync(b => b.Id == idMovie);
+            return movieE;
         }
 
-        public async Task<IEnumerable<MovieEntity>> GetMoviesAsync()
+        public IEnumerable<MovieEntity> GetMovies()
         {
-            //return movies;
             IQueryable<MovieEntity> query = cineDbContext.Movies;
-            //if (showMovies)
-            //{
-            //    query = query.Include(a => a.Movies);
-            //}
-
-            //switch (orderBy)
-            //{
-            //    case "name":
-            //        query = query.OrderBy(a => a.Name);
-            //        break;
-            //    case "lastname":
-            //        query = query.OrderBy(a => a.Lastname);
-            //        break;
-            //    case "age":
-            //        query = query.OrderBy(a => a.Age);
-            //        break;
-            //    default:
-            //        query = query.OrderBy(a => a.Id);
-            //        break;
-            //}
             query = query.AsNoTracking();
-            return await query.ToArrayAsync();
+            query = query.Include(b => b.Actor);
+            query = query.AsNoTracking();
+            return query;
         }
 
         public async Task<bool> SaveChangesAsync()

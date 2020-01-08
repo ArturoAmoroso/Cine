@@ -17,6 +17,7 @@ namespace Cinema.Data.Entities
         public string Lastname { get; set; }
      
         public int Age { get; set; }
-        public ICollection<MovieEntity> Movies { get; set; }
+        public string imgURL { get; set; }
+        public virtual ICollection<MovieEntity> Movies { get; set; }
     }
 }

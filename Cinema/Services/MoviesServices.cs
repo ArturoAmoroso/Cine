@@ -21,12 +21,11 @@ namespace Cinema.Services
         }
         public async Task<Movie> CreateMovieAsync(int idActor, Movie movie)
         {
-            var actorEntity = await validateActor(idActor);
-            if (movie.ActorId == 0)
-                movie.ActorId = idActor;
+           
             if (movie.ActorId != idActor)
                 throw new BadRequestEx($"idActor:{idActor} in URL must be equal to Body:{movie.ActorId}");
-           
+            movie.ActorId = idActor;
+            var actorEntity = await validateActor(idActor);
             var movieEntity = mapper.Map<MovieEntity>(movie);
             cineRepository.CreateMovie(movieEntity);
             
@@ -54,15 +53,15 @@ namespace Cinema.Services
 
         public async Task<Movie> GetMovieAsync(int idActor, int idMovie)
         {
-            await validateActor(idActor);
-            var movieRepo = await cineRepository.GetMovieAsync(idMovie);
-            if (movieRepo == null)
-                throw new NotFoundEx($"There isn't a movie with id:{idMovie}");
-            if (idActor != movieRepo.Actor.Id)
-                throw new BadRequestEx($"Movie: {idMovie} doesn't belong to Actor: {idActor}");
+            await ValidateAuthorAndBook(idActor,idMovie);
             var movieEntity = await cineRepository.GetMovieAsync(idMovie);
+
+            if (movieEntity == null)
+                throw new NotFoundEx($"There isn't a movie with id:{idMovie}");
+            //if (idActor != movieEntity.Actor.Id)
+            //    throw new BadRequestEx($"Movie: {idMovie} doesn't belong to Actor: {idActor}");
+
             return mapper.Map<Movie>(movieEntity);
-            //return movieRepo;
         }
 
         public async Task<IEnumerable<Movie>> GetMoviesAsync(int idActor)
@@ -70,18 +69,23 @@ namespace Cinema.Services
             await validateActor(idActor);
             //var movies = cineRepository.GetMovies();
             //return movies.Where(m => m.ActorId == idActor);
-            var moviesEntities = await cineRepository.GetMoviesAsync();
-            var movies = mapper.Map<IEnumerable<Movie>>(moviesEntities);
-            return movies.Where(b => b.ActorId == idActor);
+            var moviesEntities = cineRepository.GetMovies();
+            var moviesE = moviesEntities.Where(m=> m.Actor.Id == idActor);
+            var movies = mapper.Map<IEnumerable<Movie>>(moviesE);
+            return movies;
         }
 
         public async Task<Movie> UpdateMovieAsync(int idActor, int idMovie, Movie movie)
         {
             //GetMovie(idActor, idMovie);
+            if (movie.Id != null && movie.Id != idMovie)
+            {
+                throw new InvalidOperationException("book URL id and book body id should be the same");
+            }
             await ValidateAuthorAndBook(idActor, idMovie);
             movie.Id = idMovie;             //Para no enviar bookId en el Body
-            if (movie.ActorId == 0)
-                movie.ActorId = idActor;
+            //if (movie.ActorId == 0)
+            //    movie.ActorId = idActor;
             var movieEntity = mapper.Map<MovieEntity>(movie);
             cineRepository.UpdateMovie(movieEntity);
             if (await cineRepository.SaveChangesAsync())

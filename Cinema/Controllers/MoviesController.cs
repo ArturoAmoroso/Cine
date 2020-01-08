@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Cinema.Controllers
 {
-    [Route("api/actors/{idActor}/movies")]
+    [Route("api/actors/{idActor:int}/movies")]
     public class MoviesController : ControllerBase
     {
         private readonly IMoviesServices moviesServices;
@@ -18,8 +18,9 @@ namespace Cinema.Controllers
         {
             this.moviesServices = moviesServices;
         }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies(int idActor)
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesAsync(int idActor)
         {
             try
             {
@@ -30,12 +31,14 @@ namespace Cinema.Controllers
                 return NotFound(ex.Message);
             }
         }
+
         [HttpGet("{idMovie}")]
         public async Task<ActionResult<Movie>> GetMovieAsync(int idActor, int idMovie)
         {
             try
             {
-                return Ok(await moviesServices.GetMovieAsync(idActor, idMovie));
+                var movie = await moviesServices.GetMovieAsync(idActor, idMovie);
+                return Ok(movie);
             }
             catch (NotFoundEx ex)
             {
@@ -46,8 +49,9 @@ namespace Cinema.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost]
-        public async Task<ActionResult<Movie>> CreateMovieAsync(int idActor, [FromBody] Movie movie)
+        
+        [HttpPost()]
+        public async Task<ActionResult<Movie>> PostMovieAsync(int idActor, [FromBody] Movie movie)
         {
             if (!ModelState.IsValid)
             {
@@ -55,7 +59,8 @@ namespace Cinema.Controllers
             }
             try
             {
-                return Ok(await moviesServices.CreateMovieAsync(idActor, movie));
+                var createdMovie = await moviesServices.CreateMovieAsync(idActor, movie);
+                return Created($"/api/authors/{idActor}/books/{movie.Id}", createdMovie);
                 //return Created($"api/actors/{idActor}/movies/{movie.Id}",moviesServices.CreateMovie(idActor, movie));
             }
             catch (NotFoundEx ex)
@@ -65,6 +70,11 @@ namespace Cinema.Controllers
             catch (BadRequestEx ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
         [HttpDelete("{idMovie}")]
@@ -89,7 +99,7 @@ namespace Cinema.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("{idMovie}")]
+        [HttpPut("{idMovie:int}")]
         public async Task<ActionResult<Movie>> UpdateMovieAsync(int idActor, int idMovie, [FromBody] Movie movie)
         {
             if (!ModelState.IsValid)

@@ -9,7 +9,7 @@ namespace Cinema.Models
 {
     public class Movie
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Required(ErrorMessage = "Movie needs a {0}")]
         public string Name { get; set; }
         public int Duration { get; set; }
@@ -17,5 +17,7 @@ namespace Cinema.Models
         public string Genre { get; set; }
         //[JsonIgnore]
         public int ActorId { get; set; }
+
+        public string imgURL { get; set; }
     }
 }
