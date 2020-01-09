@@ -31,6 +31,16 @@ namespace Cinema.Services
 
         }
 
+        public async Task<bool> DeleteWinnerAsync(int id)
+        {
+            await cineRepository.DeleteWinnerAsync(id);
+            if (await cineRepository.SaveChangesAsync())
+            {
+                return true;
+            }
+            return false;
+        }
+
         public IEnumerable<Winner> GetWinners()
         {
             var winnerEntities = cineRepository.GetWinners();

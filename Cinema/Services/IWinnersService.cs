@@ -10,5 +10,6 @@ namespace Cinema.Services
     {
         IEnumerable<Winner> GetWinners();
         Task<Winner> CreateWinnerAsync(Winner winner);
+        Task<bool> DeleteWinnerAsync(int id);
     }
 }

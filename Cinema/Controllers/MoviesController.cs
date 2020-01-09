@@ -85,7 +85,7 @@ namespace Cinema.Controllers
                 var res = await moviesServices.DeleteMovieAsync(idActor, idMovie);
                 if (res)
                 {
-                    return Ok($"Movie: {idMovie} removed");
+                    return Ok(res);
                 }
                 else
                     return StatusCode(StatusCodes.Status500InternalServerError, $"Movie: {idMovie} couldn't remove");

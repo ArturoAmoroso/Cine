@@ -111,6 +111,12 @@ namespace Cinema.Data
             cineDbContext.Movies.Remove(movieToDelete);
         }
 
+        public async Task DeleteWinnerAsync(int id)
+        {
+            var winnerToDelete = await cineDbContext.Winners.SingleAsync(a => a.Id == id);
+            cineDbContext.Winners.Remove(winnerToDelete);
+        }
+
         public async Task<ActorEntity> GetActorAsync(int id, bool showMovies)
         {
             //var actor = actors.SingleOrDefault(a => a.Id == id);

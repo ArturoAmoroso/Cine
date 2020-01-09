@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Cinema.Controllers
 {
     [Route("api/[controller]")]
-    public class WinnersController: ControllerBase
+    public class WinnersController : ControllerBase
     {
         private IWinnersService winnersService;
 
@@ -27,6 +27,11 @@ namespace Cinema.Controllers
         {
             return Ok(await winnersService.CreateWinnerAsync(winner));
 
+        }
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<bool>> DeleteWinner(int id)
+        {
+            return Ok(await winnersService.DeleteWinnerAsync(id));
         }
     }
 }

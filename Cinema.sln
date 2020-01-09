@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.779
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinema", "Cinema\Cinema.csproj", "{CB4D4F15-2E91-41AB-BAD7-4C1ED0147171}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinema", "Cinema\Cinema.csproj", "{CB4D4F15-2E91-41AB-BAD7-4C1ED0147171}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaTest", "CinemaTest\CinemaTest.csproj", "{5BD060E6-C1A6-4DCF-A2A8-C535E1362562}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CB4D4F15-2E91-41AB-BAD7-4C1ED0147171}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB4D4F15-2E91-41AB-BAD7-4C1ED0147171}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB4D4F15-2E91-41AB-BAD7-4C1ED0147171}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BD060E6-C1A6-4DCF-A2A8-C535E1362562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BD060E6-C1A6-4DCF-A2A8-C535E1362562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BD060E6-C1A6-4DCF-A2A8-C535E1362562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BD060E6-C1A6-4DCF-A2A8-C535E1362562}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

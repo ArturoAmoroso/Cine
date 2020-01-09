@@ -29,5 +29,6 @@ namespace Cinema.Data
         //Winners
         IEnumerable<WinnerEntity> GetWinners();
         void CreateWinner(WinnerEntity winner);
+        Task DeleteWinnerAsync(int id);
     }
 }
