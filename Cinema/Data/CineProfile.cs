@@ -18,6 +18,9 @@ namespace Cinema.Data
             this.CreateMap<MovieEntity, Movie>()
                 .ReverseMap();
 
+            this.CreateMap<WinnerEntity, Winner>()
+                .ReverseMap();
+
 
             //this.CreateMap<Camp, CampModel>()
             //  .ForMember(c => c.Venue, o => o.MapFrom(m => m.Location.VenueName))

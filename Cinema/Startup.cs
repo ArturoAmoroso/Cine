@@ -33,6 +33,7 @@ namespace Cinema
             services.AddTransient<ICineRepository, CineRepository>();
             services.AddTransient<IActorsServices, ActorsServices>();
             services.AddTransient<IMoviesServices, MoviesServices>();
+            services.AddTransient<IWinnersService, WinnersService>();
 
             //entity framework config
             services.AddEntityFrameworkSqlServer();

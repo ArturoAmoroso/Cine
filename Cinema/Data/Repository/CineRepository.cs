@@ -12,6 +12,8 @@ namespace Cinema.Data
     {
         List<Actor> actors;
         List<Movie> movies;
+        List<Winner> winners;
+
         private CineDbContext cineDbContext;
         public CineRepository(CineDbContext cineDbContext)
         {
@@ -46,6 +48,25 @@ namespace Cinema.Data
                     ActorId = 222
                 }
             };
+            winners = new List<Winner>() {
+                new Winner()
+                {
+                    Id = 1,
+                    Name = "Will",
+                    Lastname = "Smith",
+                    movie = "Geminis",
+                    year = 2019
+                    
+                },
+                new Winner()
+                {
+                    Id = 2,
+                    Name = "Roberts",
+                    Lastname = "DeNiro",
+                    movie = "El irlandes",
+                    year = 2019
+                }
+            };
         }
         public void CreateActor(ActorEntity actor)
         {
@@ -68,6 +89,11 @@ namespace Cinema.Data
             //return movie;
             cineDbContext.Entry(movie.Actor).State = EntityState.Unchanged;
             cineDbContext.Movies.Add(movie);
+        }
+
+        public void CreateWinner(WinnerEntity winner)
+        {
+            cineDbContext.Winners.Add(winner);
         }
 
         public async Task DeleteActorAsync(int id)
@@ -162,6 +188,11 @@ namespace Cinema.Data
             return query;
         }
 
+        public IEnumerable<WinnerEntity> GetWinners()
+        {
+            return cineDbContext.Winners;
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             return (await cineDbContext.SaveChangesAsync()) > 0;
@@ -189,9 +220,6 @@ namespace Cinema.Data
 
             cineDbContext.Entry(movie.Actor).State = EntityState.Unchanged;
             cineDbContext.Movies.Update(movie);
-
-
-            
             
         }
     }

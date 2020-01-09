@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Cinema.Services
 {
-    [Route("api/actors")]
+    [Route("api/[controller]")]
     public class ActorsController : ControllerBase
     {
         private readonly IActorsServices actorsServices;

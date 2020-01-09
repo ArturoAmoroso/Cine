@@ -25,5 +25,9 @@ namespace Cinema.Data
         void CreateMovie(MovieEntity movie);
         Task DeleteMovieAsync(int id);
         void UpdateMovie(MovieEntity movie);
+
+        //Winners
+        IEnumerable<WinnerEntity> GetWinners();
+        void CreateWinner(WinnerEntity winner);
     }
 }
