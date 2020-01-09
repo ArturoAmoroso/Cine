@@ -82,13 +82,15 @@ namespace Cinema.Controllers
         {
             try
             {
-                var res = await moviesServices.DeleteMovieAsync(idActor, idMovie);
-                if (res)
-                {
-                    return Ok($"Movie: {idMovie} removed");
-                }
-                else
-                    return StatusCode(StatusCodes.Status500InternalServerError, $"Movie: {idMovie} couldn't remove");
+                return Ok(await this.moviesServices.DeleteMovieAsync(idActor, idMovie));
+
+                //var res = await moviesServices.DeleteMovieAsync(idActor, idMovie);
+                //if (res)
+                //{
+                //    return Ok($"Movie: {idMovie} removed");
+                //}
+                //else
+                //    return StatusCode(StatusCodes.Status500InternalServerError, $"Movie: {idMovie} couldn't remove");
             }
             catch (NotFoundEx ex)
             {
