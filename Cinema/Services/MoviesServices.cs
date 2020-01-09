@@ -102,7 +102,7 @@ namespace Cinema.Services
             return actorFound;
         }
 
-        private async Task<bool> ValidateAuthorAndBook(int actorId, int bookId)
+        private async Task<bool> ValidateAuthorAndBook(int actorId, int movieId)
         {
 
             var actor = await cineRepository.GetActorAsync(actorId);
@@ -111,10 +111,10 @@ namespace Cinema.Services
                 throw new NotFoundEx($"cannot found author with id {actorId}");
             }
 
-            var movie = await cineRepository.GetMovieAsync(bookId, true);
+            var movie = await cineRepository.GetMovieAsync(movieId, true);
             if (movie == null || movie.Actor.Id != actorId)
             {
-                throw new NotFoundEx($"Book not found with id {bookId} for author {actorId}");
+                throw new NotFoundEx($"Book not found with id {movieId} for author {actorId}");
             }
 
             return true;

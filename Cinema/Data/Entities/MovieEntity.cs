@@ -17,6 +17,7 @@ namespace Cinema.Data.Entities
        
         public string Genre { get; set; }
         public string imgURL { get; set; }
+        public int year { get; set; }
         [Required]
         [ForeignKey("ActorId")]
         public virtual ActorEntity Actor { get; set; }

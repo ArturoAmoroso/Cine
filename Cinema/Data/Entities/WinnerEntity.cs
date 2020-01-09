@@ -15,5 +15,7 @@ namespace Cinema.Data.Entities
         public string Lastname { get; set; }
         public int year { get; set; }
         public string movie { get; set; }
+        public string imgUrlActor { get; set; }
+        public string imgUrlMovie { get; set; }
     }
 }

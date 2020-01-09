@@ -19,5 +19,6 @@ namespace Cinema.Models
         public int ActorId { get; set; }
 
         public string imgURL { get; set; }
+        public int year { get; set; }
     }
 }
